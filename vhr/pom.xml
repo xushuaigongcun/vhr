@@ -17,6 +17,96 @@
         <module>vhrserver</module>
         <module>mailserver</module>
     </modules>
+<!--<build>-->
+<!--    <plugins>-->
+<!--        <plugin>-->
+<!--            <groupId>com.spotify</groupId>-->
+<!--            <artifactId>docker-maven-plugin</artifactId>-->
+<!--            <version>1.2.0</version>-->
+<!--            <executions>-->
+<!--                <execution>-->
+<!--                    <id>build-image</id>-->
+<!--                    <phase>package</phase>-->
+<!--                    <goals>-->
+<!--                        <goal>build</goal>-->
+<!--                    </goals>-->
+<!--                </execution>-->
+<!--            </executions>-->
+<!--            <configuration>-->
+<!--                <dockerHost>http://1.15.114.101:2375</dockerHost>-->
+<!--                <imageName>javaboy/1.0</imageName>-->
+<!--                <imageTags>-->
+<!--                    <imageTag>1.0</imageTag>-->
+<!--                </imageTags>-->
+<!--                <forceTags>true</forceTags>-->
+<!--                <dockerDirectory>/</dockerDirectory>-->
+<!--                <resources>-->
+<!--                    <resource>-->
+<!--                        <targetPath>/1.0</targetPath>-->
+<!--                        <directory>/1.0</directory>-->
+<!--                        <include>vhr.jar</include>-->
+<!--                    </resource>-->
+<!--                </resources>-->
+<!--            </configuration>-->
+<!--        </plugin>-->
+<!--    </plugins>-->
+<!--</build>-->
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>  <!-- 在maven进行package的时候执行-->
+                        <configuration>
+                            <tasks>
+                                <!--jar包保存位置 -->
+                                <copy todir="${project.jar.output.directory}">
+                                    <!--antrun自动生成的配置文件的保存位置，这里默认是父项目的target文件夹 -->
+                                    <fileset dir="${project.build.directory}">
+                                        <include name="*.jar" />
+                                    </fileset>
+                                </copy>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    <repositories>
+        <repository>
+            <id>public</id>
+            <name>aliyun nexus</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>public</id>
+            <name>aliyun nexus</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+    <properties>
+        <!-- properties中定义jar包的保存路径-->
+        <project.jar.output.directory>/Users/xushuai/Downloads/JavaTool/vhr/vhr-web/vhr/vhr</project.jar.output.directory>
+    </properties>
+
+
+
 
 
 </project>
